@@ -1,0 +1,14 @@
+\section{Numerical implementation}
+
+To solve equation \ref{eq:simpleeom} we rewrite the second order equation as a coupled system of first order equations as
+\begin{align}\label{eq:system}
+	\der{\boldsymbol{\xi}}{\tau} &= \boldsymbol{\chi} \\
+	\der{\boldsymbol{\chi}}{\tau} &= \boldsymbol{\chi} \times \hat{\mathbf{B}},
+\end{align}
+where $\boldsymbol{\chi}$ is the dimensionless velocity associated to $\boldsymbol{\xi}$ and $\tau$. The system of equations is then solved by stacking $\boldsymbol{\xi}$ and $\boldsymbol{\chi}$ into one vector,$\mathbf{X}$, and then applying an ODE-solver to the system.
+\begin{equation}\label{eq:ODE}
+	\der{\mathbf{X}}{\tau} = \mathbf{f}(\mathbf{X},\tau),
+\end{equation}
+where $f_i = X_{i+3}$ for $i=1,2,3$, and $f_i = \epsilon_{ijk} X_j \hat{B}_k $ for $i=4,5,6$. We use the built-in ODE-solver in \texttt{scipy}, \texttt{odeint}, which in turn calls the ODE-solver \texttt{lsoda} written in \texttt{FORTRAN}, which is an adaptive-step Runge Kutta method for solving ODEs.
+
+\newpage

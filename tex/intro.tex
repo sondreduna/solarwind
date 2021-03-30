@@ -1,0 +1,61 @@
+\section{Theory}
+
+We model the magnetic field from the earth by a point dipole at its centre, giving the field
+\begin{equation}\label{eq:dipole}
+	\mathbf{B}(\mathbf{r}) = \frac{\mu_0}{4 \pi} \left( \frac{(\mathbf{m} \cdot \mathbf{r}) \mathbf{r} - r^2 \mathbf{m}}{r^5} \right)
+\end{equation}
+where $\mathbf{m}$ is the dipole moment. The magnitude of earth's dipole moment is approximately $8\cdot10^{22} \mathrm{Am}^2$ \cite{Olson2006}. The equations of motion for a particle moving in the presence is given by Newton's second law and the Lorentz force (with $\mathbf{E} = 0$):
+\begin{equation}\label{eq:eom}
+	\ddot{\mathbf{r}} = \frac{1}{m} q \mathbf{v} \times \mathbf{B} 
+\end{equation}
+
+To solve the equation numerically, we recast it into dimensionless form. Define the following dimensionless quantities 
+\begin{equation}
+	\boldsymbol{\xi} \coloneqq \frac{\mathbf{r}}{a} \quad ; \quad \hat{\mathbf{B}} \coloneqq \frac{\mathbf{B}}{B_0}
+\end{equation}
+where $B_0 = \frac{\mu_0 m_0}{4 \pi a^3}$. Here $a$ denotes the average radius of the earth, and $m_0$ the dipole moment of earth's magnetic field. Inserting these definitions into the equation of motion in \ref{eq:eom} yields
+\begin{equation}
+	\ddot{\boldsymbol{\xi}} = \frac{q \mu_0 m_0}{4\pi m a^3} \dot{\boldsymbol{\xi}} \times \hat{\mathbf{B}}.
+\end{equation}
+
+If we now also introduce a dimensionless time $\tau := t/t_0$ we see that we can identify that the quantity 
+\begin{equation}
+	t_0 = \left(\frac{q \mu_0 m_0 }{4 \pi m a^3} \right)^{-1}
+\end{equation}
+
+sets a natural time scale for our problem. Hence the equation in question is in dimensionless form written as 
+\begin{equation}\label{eq:simpleeom}
+	\dd{\boldsymbol{\xi}}{\tau} = \der{\boldsymbol{\xi}}{\tau} \times \hat{\mathbf{B}}.
+\end{equation}
+
+\begin{table}[h]
+	\centering
+	\caption{The constants involved in the dimensionless quantities.}
+	
+	\begin{tabular}{ccc}
+		\toprule
+		Quantity & Value & Unit \\
+		\midrule
+		$m_0$ & $8   \cdot 10^{22}$ & $\text{A} \cdot \text{m}^2$ \\
+		$q$   & $1.6 \cdot 10^{-19}$ & $\text{C}$ \\
+		$m$   & $1.67 \cdot 10^{-27}$ & $\text{kg}$ \\
+		$a$   & $6.4 \cdot 10^{6}$   & $\text{m}$ \\
+		$\mu_0$ &$4\pi \cdot 10 ^{-7}$ & $\text{N}/{\text{A}^2}$ \\
+		$t_0$ & $3.42 \cdot 10^{-4}$ & $\text{s}$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+What we observe here is however that the time scale set by the parameters of the problem is very short. We will adjust the time scale so that velocities $\mathcal{O}(1)$ are typical velocities of the solar winds. These velocities are in the range $250-750 \, \text{km}/\text{s}$ \cite{Khabarova_2018}. This is done by scaling the time by $1\cdot10^5$, whence the typical speeds are $\simeq 200 \, \text{km}/\text{s}$ To keep the simple form of \eqref{eq:simpleeom} we scale $\hat{B}$ by the same factor. This ensures that the interesting behaviour of the particles is captured by the simulations. 
+
+\subsection*{What kind of motion do we expect?}
+
+This argument is slightly adapted from \cite[sec.~12.4]{Jackson:100964}
+
+In the case under consideration, a perturbation solution to the motion gives adequate insight into how the particles move. When the distance over which $\mathbf{B}$ changes appreciably is large compared to the gyration radius of the motion\footnote{This is certainly the case when considering protons in the earth's magnetic field.}, the lowest order approximation is a spiralling motion around the field lines, with a frequency given by the local field. The second term in the expansion of the solution will involve a slow change which can be described as drifting of the centre of the orbit. 
+
+%There are two effects giving a drift of the particles in the magnetic field: gradient drift, and curvature drift, arising from the non-zero gradient and curvature of the magnetic field respectively. The combined drift velocity from these effects is \cite[p.~591]{Jackson:100964}
+%\[
+%	\mathbf{v}_D = \frac{1}{\omega_B R} \left( v_{\parallel}^2 + v_{\perp}^2 \right) \frac{\mathbf{R} \times \mathbf{B}}{RB},
+%\]
+%where $\omega_B$ is the gyration frequency and $\mathbf{R}$ is the effective temporary radius of curvature of the field \textit{from} the centre of curvature \textit{to} the particle. As is evident from this expression, the trajectories will twirl around the field lines $\mathbf{B}$ in helical motion. 
