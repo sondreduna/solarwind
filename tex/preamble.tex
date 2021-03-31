@@ -15,12 +15,6 @@
 \titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 \titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
-% Sets margins and page size
-
-\usepackage{amsmath, esint,mathrsfs}
-\def\doubleunderline#1{\underline{\underline{#1}}}
-\renewcommand{\labelenumi}{(\alph{enumi})}                % Use letters for enumerate
-
 \newcommand{\gv}[1]{\ensuremath{\mbox{\boldmath$ #1 $}}} 
 \newcommand{\uv}[1]{\ensuremath{\mathbf{\hat{#1}}}}       % enhetsvektor
 \newcommand{\abs}[1]{\left| #1 \right|}                   % abslouttverdi
@@ -39,20 +33,6 @@
 	\left. #2 \vphantom{#1} \right>}                       % for Dirac brackets
 \newcommand{\matrixel}[3]{\left< #1 \vphantom{#2#3} \right|
 	#2 \left| #3 \vphantom{#1#2} \right>}                  % for Dirac matrix elements
-
-% Vektoranalyse
-
-\newcommand{\grad}[1]{\gv{\nabla} #1}                      % gradient
-\let\divsymb=\div                                          % nytt navn til div
-\renewcommand{\div}[1]{\gv{\nabla} \cdot \v{#1}}           % divergens
-\newcommand{\curl}[1]{\gv{\nabla} \times \v{#1}}           % curl
-
-
-% div macros
-
-\newcommand{\iu}{\textup{i}} % imaginary unit
-\newcommand{\e}{\textup{e}} % exponent
-\newcommand{\intd}[1]{\int\text{d}#1}
 
 % document layout
 
@@ -73,7 +53,6 @@
 \renewcommand{\headrulewidth}{0.5pt}
 \fancyhf{}
 \rhead{\textit{\fontfamily{cmr}\selectfont Sondre Duna Lundemo}}
-\lhead{\small \textsc{\rightmark}}
 \cfoot{\textemdash \, \thepage \, \textemdash}
 
 %\titleformat*{\section}{\bfseries \Large #1 }

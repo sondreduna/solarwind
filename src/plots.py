@@ -291,12 +291,12 @@ def plot_energy():
     for zi in z:
         X = np.load(f"../data/X_z0={zi}.npy")
         E = v_square(X[:,3:])
-        E = E/E[0]
+        dE = np.abs((E - E[0]))/E[0]
         
-        plt.plot(T,E,color = cmap(zi))
+        plt.plot(T,dE,color = cmap(zi))
 
     plt.xlabel(r"$\tau$")
-    plt.ylabel(r"$\frac{E(t)}{E(0)}$")
+    plt.ylabel(r"$\frac{|E(t) - E(0)|}{E(0)}$")
 
     plt.tight_layout()
     plt.grid(ls = "--")
