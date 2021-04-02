@@ -46,8 +46,6 @@ def integrate_weak(x0,z0,v0,Tmax,N):
     return X
 
 def saveX(X,path):
-
-    # Save file with initial conditions as markers
     # Saving to .npy file is way faster than going via .txt
     
     np.save(path,X)

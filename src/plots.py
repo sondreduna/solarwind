@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib import rc
 import matplotlib as mpl
-from time import time
-from mpl_toolkits.mplot3d import Axes3D
 
 from physics import * 
 
@@ -36,140 +34,18 @@ def B_hat(x,y,z):
     
     return 3 * xi * b1 - b2
 
-def plot_earth_field():
+def plot_earth_field(path = "../fig/earth.pdf"):
 
-    x = np.linspace(-10,10,400)
-    y = np.linspace(-10,10,400)
-    z = np.linspace(-10,10,400)
-
-    xx, zz = np.meshgrid(x,z)
-    xx, yy = np.meshgrid(x,y)
-
-    B1 = B_hat(xx,np.zeros(np.shape(xx)),zz)
-    B2 = B_hat(xx,yy,np.zeros(np.shape(zz)))
-    
     fig, ax = plt.subplots(ncols = 2, figsize = (20,10))
     
-    xmin = np.min(xx)
-    xmax = np.max(xx)
+    add_field(ax,-10,10)
     
-    ymin = np.min(yy)
-    ymax = np.max(yy)
-    
-    zmin = np.min(zz)
-    zmax = np.max(zz)
-    
-    x = np.array([xmin,xmax])
-    
-    # xz plane
-    
-    # plot tilted axis 
-    ax[0].plot(x,1/np.tan(theta)*x,ls = "--",color = "red", zorder = 1,lw  = 2)
-    # plot the earth
-    ax[0].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2))
-    # plot the B-field
-    ax[0].streamplot(xx,zz,B1[0],B1[2],color = "black",zorder = 1,arrowstyle = "fancy",linewidth = 2)
-    
-    ax[0].set_xlabel(r"$\xi_1$")
-    ax[0].set_ylabel(r"$\xi_3$")
-    
-    ax[0].set_xlim([xmin,xmax])
-    ax[0].set_ylim([zmin,zmax])
-    
-    #ax[0].axis("scaled")
+    ax[0].axis("scaled")
+    ax[1].axis("scaled")
     
     plt.tight_layout()
     
-    # xy plane
-    
-    #plot tilted axis 
-    ax[1].plot(x,np.tan(phi)*x,ls = "--",color = "red", zorder = 1,lw  = 2)
-    # plot the earth
-    ax[1].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2))
-    # plot the B-field
-    ax[1].streamplot(xx,yy,B2[0],B2[1],color = "black",zorder = 1,arrowstyle = "fancy",linewidth = 2)
-    
-    ax[1].set_xlabel(r"$\xi_1$")
-    ax[1].set_ylabel(r"$\xi_2$")
-    
-    ax[1].set_xlim([xmin,xmax])
-    ax[1].set_ylim([ymin,ymax])
-    
-    #ax[1].axis("scaled")
-    
-    plt.tight_layout()
-    
-    fig.savefig(cwd+path)
-    
-def plot_earth_field_traj(trajectory,title,path):
-
-    x_  = np.min(trajectory[0,:])
-    x__ = np.max(trajectory[0,:]) 
-    
-    x = np.linspace(x_ - 0.5,x__ + 0.5,400)
-    y = np.linspace(x_ - 0.5,x__ + 0.5,400)
-    z = np.linspace(x_ - 0.5,x__ + 0.5,400)
-
-    xx, zz = np.meshgrid(x,z)
-    xx, yy = np.meshgrid(x,y)
-
-    B1 = B_hat(xx,np.zeros(np.shape(xx)),zz)
-    B2 = B_hat(xx,yy,np.zeros(np.shape(zz)))
-    
-    fig, ax = plt.subplots(ncols = 2, figsize = (20,10))
-    
-    xmin = np.min(xx)
-    xmax = np.max(xx)
-    
-    ymin = np.min(yy)
-    ymax = np.max(yy)
-    
-    zmin = np.min(zz)
-    zmax = np.max(zz)
-    
-    x = np.array([xmin,xmax])
-    
-    # xz plane
-    
-    plt.suptitle(title)
-    
-    # plot tilted axis 
-    ax[0].plot(x,1/np.tan(theta)*x,ls = "--",color = "red", zorder = 1,lw  = 2)
-    # plot the earth
-    ax[0].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2,alpha = 0.3))
-    # plot the B-field
-    ax[0].streamplot(xx,zz,B1[0],B1[2],color = "black",zorder = 1,arrowstyle = "fancy",linewidth = 2)
-    # plot the trajectory
-    ax[0].plot(trajectory[:,0],trajectory[:,2],color ="blue")
-    
-    ax[0].set_xlabel(r"$\xi_1$")
-    ax[0].set_ylabel(r"$\xi_3$")
-    
-    ax[0].set_xlim([xmin,xmax])
-    ax[0].set_ylim([zmin,zmax])
-    
-    plt.tight_layout()
-    
-    # xy plane
-    
-    #plot tilted axis 
-    ax[1].plot(x,np.tan(phi)*x,ls = "--",color = "red", zorder = 1,lw  = 2)
-    # plot the earth
-    ax[1].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2, alpha = 0.3))
-    # plot the B-field
-    ax[1].streamplot(xx,yy,B2[0],B2[1],color = "black",zorder = 1,arrowstyle = "fancy",linewidth = 2)
-    # plot the trajectory
-    ax[1].plot(trajectory[:,0],trajectory[:,1],color ="blue")
-    
-    ax[1].set_xlabel(r"$\xi_1$")
-    ax[1].set_ylabel(r"$\xi_2$")
-    
-    ax[1].set_xlim([xmin,xmax])
-    ax[1].set_ylim([ymin,ymax])
-    
-    plt.tight_layout()
-    
-    fig.savefig(cwd+path)
+    fig.savefig(path)
 
 
 def add_field(ax,xmin,xmax):
@@ -194,9 +70,9 @@ def add_field(ax,xmin,xmax):
     zmax = np.max(zz)
 
     # plot tilted axis 
-    ax[0].plot(x,1/np.tan(theta)*x,ls = "--",color = "red", zorder = 1,lw  = 2)
+    ax[0].axline((0,0),slope = 1/np.tan(theta), ls = "--", color = "red", zorder = 1, lw = 2)
     # plot the earth
-    ax[0].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2,alpha = 0.8))
+    ax[0].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2))
     # plot the B-field
     ax[0].streamplot(xx,zz,B1[0],B1[2],color = "black",zorder = 1,arrowstyle = "fancy",linewidth = 2)
     ax[0].set_xlabel(r"$\xi_1$")
@@ -204,10 +80,10 @@ def add_field(ax,xmin,xmax):
     ax[0].set_xlim([xmin,xmax])
     ax[0].set_ylim([zmin,zmax])
 
-    #plot tilted axis 
-    ax[1].plot(x,np.tan(phi)*x,ls = "--",color = "red", zorder = 1,lw  = 2)
+    #plot tilted axis
+    ax[1].axhline(y = 0, ls = "--", color = "red", zorder = 1, lw = 2)
     # plot the earth
-    ax[1].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2, alpha = 0.8))
+    ax[1].add_patch(plt.Circle((0, 0), 1, color='b',zorder = 2))
     # plot the B-field
     ax[1].streamplot(xx,yy,B2[0],B2[1],color = "black",zorder = 1,arrowstyle = "fancy",linewidth = 2)
     ax[1].set_xlabel(r"$\xi_1$")
@@ -219,33 +95,39 @@ def add_traj(ax,x,y,color="blue"):
 
     ax.plot(x,y,color=color)
 
-def plot_fast(path):
+def plot_fast(v0_fast):
 
-    X  = np.load(path)
+    X  = np.load(f"../data/X_x0=-15_v0={v0_fast}.npy")
     
     fig, ax = plt.subplots(ncols = 2, figsize = (20,10))
 
-    plt.suptitle(r"$v_0 = 10$")
+    plt.suptitle(f"$v_0 = {v0_fast}$")
     
-    add_field(ax,-17,17)
+    add_field(ax,-20,20)
     add_traj(ax[0],X[:,0],X[:,2])
     add_traj(ax[1],X[:,0],X[:,1])
 
+    ax[0].axis("scaled")
+    ax[1].axis("scaled")
+    
     plt.tight_layout()
     fig.savefig("../fig/earth_traj_fast.pdf")
 
 
-def plot_slow(path):
+def plot_slow(v0_slow):
 
-    X = np.load(path)
+    X = np.load(f"../data/X_x0=-15_v0={v0_slow}.npy")
     
     fig, ax = plt.subplots(ncols = 2, figsize = (20,10))
 
-    plt.suptitle(r"$v_0 = 1$")
+    plt.suptitle(f"$v_0 = {v0_slow}$")
 
     add_field(ax,-20,20)
     add_traj(ax[0],X[:,0],X[:,2])
     add_traj(ax[1],X[:,0],X[:,1])
+
+    ax[0].axis("scaled")
+    ax[1].axis("scaled")
 
     plt.tight_layout()
     fig.savefig("../fig/earth_traj_slow.pdf")
@@ -272,11 +154,14 @@ def plot_diffz_weak():
     fig, ax = plt.subplots(ncols = 2, figsize = (20,10))
 
     plt.suptitle(r"$v_0 = 1$")
-    add_field(ax,-20,20)
+    add_field(ax,-17,17)
     for zi in z:
         X  = np.load(f"../data/Xw_z0={zi}.npy")
         add_traj(ax[0],X[:,0],X[:,2],color=cmap(zi))
         add_traj(ax[1],X[:,0],X[:,1],color=cmap(zi))
+
+    ax[0].axis("scaled")
+    ax[1].axis("scaled")
 
     plt.tight_layout()
     fig.savefig("../fig/weak_traj_diffz.pdf")
@@ -295,19 +180,11 @@ def plot_energy():
         
         plt.plot(T,dE,color = cmap(zi))
 
+    plt.yscale("log")
     plt.xlabel(r"$\tau$")
-    plt.ylabel(r"$\frac{|E(t) - E(0)|}{E(0)}$")
+    plt.ylabel(r"$\frac{|E(\tau) - E(0)|}{E(0)}$")
 
     plt.tight_layout()
     plt.grid(ls = "--")
 
     plt.savefig("../fig/energy.pdf")
-
-
-if __name__ == "__main__":
-
-    #plot_fast("../data/X_fast.npy")
-    #plot_slow("../data/X_slow.npy")
-    #plot_diffz()
-    #plot_diffz_weak()
-    plot_energy()
