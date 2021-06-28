@@ -25,7 +25,7 @@ B_0   = mu0 * m0/(4*np.pi*a**3)
 
 C     = 1e5
 
-theta = 0.00001
+theta = (180 + 23.4) * np.pi/180 
 phi   = 0
 
 m_hat = sphere(theta,phi)

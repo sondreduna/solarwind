@@ -1,0 +1,85 @@
+\section{Theory}
+
+We model the magnetic field from the earth as a point dipole at its centre, giving the field
+\begin{equation}\label{eq:dipole}
+	\V{B}(\V{r}) = \frac{\mu_0}{4 \pi} \left( \frac{(\V{m} \cdot \V{r}) \V{r} - r^2 \V{m}}{r^5} \right)
+\end{equation}
+where $\V{m}$ is the dipole moment. The magnitude of earth's dipole moment is approximately $8\cdot10^{22} \mathrm{Am}^2$ \cite{Olson2006}. The equations of motion for a particle moving in the presence of a magnetic field $\V{B}$ is given by Newton's second law and the Lorentz force (with $\V{E} = 0$):
+\begin{equation}\label{eq:eom}
+	\ddot{\V{r}} = \frac{1}{m} q \dot{\V{r}} \times \V{B}.
+\end{equation}
+
+To solve the equation numerically, we recast it into dimensionless form. Define the following dimensionless quantities 
+\begin{equation}
+	\boldsymbol{\xi} \coloneqq \frac{\V{r}}{a} \quad ; \quad \hat{\V{B}} \coloneqq \frac{\V{B}}{B_0}
+\end{equation}
+where $B_0 = \frac{\mu_0 m_0}{4 \pi a^3}$. Here $a$ denotes the average radius of the earth, and $m_0$ the dipole moment of earth's magnetic field. Inserting these definitions into the equation of motion in \ref{eq:eom} yields
+\begin{equation}
+	\ddot{\boldsymbol{\xi}} = \frac{q \mu_0 m_0}{4\pi m a^3} \dot{\boldsymbol{\xi}} \times \hat{\V{B}}.
+\end{equation}
+
+If we now also introduce a dimensionless time $\tau \coloneqq t/t_0$ we see that we can identify the quantity 
+\begin{equation}
+	t_0 = \left(\frac{q \mu_0 m_0 }{4 \pi m a^3} \right)^{-1}
+\end{equation}
+
+as a natural time scale for our problem. Hence the equation of motion is in dimensionless form written as 
+\begin{equation}\label{eq:simpleeom}
+	\dd{\boldsymbol{\xi}}{\tau} = \der{\boldsymbol{\xi}}{\tau} \times \hat{\V{B}}.
+\end{equation}
+
+\begin{table}[h]
+	\centering
+	\caption{The constants involved in the dimensionless quantities.}
+	
+	\begin{tabular}{ccc}
+		\toprule
+		Quantity & Value & Unit \\
+		\midrule
+		$m_0$ & $8   \cdot 10^{22}$ & $\text{A} \cdot \text{m}^2$ \\
+		$q$   & $1.6 \cdot 10^{-19}$ & $\text{C}$ \\
+		$m$   & $1.67 \cdot 10^{-27}$ & $\text{kg}$ \\
+		$a$   & $6.4 \cdot 10^{6}$   & $\text{m}$ \\
+		$\mu_0$ &$4\pi \cdot 10 ^{-7}$ & $\text{N}/{\text{A}^2}$ \\
+		$t_0$ & $3.42 \cdot 10^{-4}$ & $\text{s}$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+What we observe here is however that the time scale set by the parameters of the problem is very short. We will adjust the time scale so that velocities $\mathcal{O}(1)$ are typical velocities of the solar winds. These velocities are in the range $250-750 \, \text{km}/\text{s}$ \cite{Khabarova_2018}. This is done by scaling the time by $1\cdot10^5$, so that the typical speeds are $\simeq 190 \, \text{km}/\text{s}$. To keep the simple form of \eqref{eq:simpleeom} we scale $\hat{B}$ by the same factor. This will ensure that the interesting behaviour of the particles is captured by the simulations. 
+
+\subsection*{What kind of motion do we expect?}\label{sec:motion}
+
+(This argument is slightly adapted and shortened from \cite[sec.~12.4]{Jackson:100964}. For more details, please consult this reference.) 
+
+In the case under consideration, a perturbation solution to the motion gives adequate insight into how the particles move. When the distance over which $\V{B}$ changes appreciably is large compared to the gyration radius of the motion\footnote{This is certainly the case when considering protons in the earth's magnetic field.}, the lowest order approximation is a spiralling motion around the field lines, with a frequency given by the local field. The second term in the expansion of the solution will involve a slow change which can be described as drifting of the centre of the orbit. 
+
+%Hence, in the first approximation one should expect spiralling motion around the local field and uniform motion parallel to it. If the gyration radius is sufficiently small, one should therefore expect the particles to follow the field lines and spiral around them. 
+
+By expanding the magnetic field in the expression for the gyration frequency to first order along the direction perpendicular to the field, $\V{n}$, one obtains\footnote{Note that \cite{Jackson:100964} treats this case in Gaussian units and uses relativistic equations of motion.}
+\[
+	\boldsymbol{\omega}_B = \frac{e}{m} \V{B}(\V{x}) \simeq \boldsymbol{\omega}_0 \left[
+	1 + \frac{1}{B_0} \pd{B}{\V{n}}\biggr\lvert_{0} \cdot \V{x} \right],
+\]
+where the $0$ subscripts denotes the quantity evaluated in the unperturbed case. Since the direction of the perturbed $\V{B}$ is unchanged, the velocity parallel to $\V{B}$ is still uniform. By writing the transverse velocity $\V{v}_\perp = \V{v}_0 + \V{v}_1$, we can substitute the above expression into the equation of motion in \ref{eq:eom} to obtain
+\[
+	\der{\V{v}_\perp}{t} = \V{v}_\perp \times \boldsymbol{\omega}_B(\V{x}),
+\]
+from which it follows that  
+\[
+	\der{\V{v}_1}{t} \simeq \left[ \V{v}_1 + \V{v_0} \left(\frac{1}{B_0} \pd{B}{\V{n}}\biggr\lvert_{0} \cdot \V{x}_0 \right) \right] \times \boldsymbol{\omega}_0.
+\]
+
+One can show that $\V{v}_1$ has, apart from oscillatory terms, a non-zero time average given by 
+\begin{equation}\label{eq:v_grad}
+	\langle \V{v}_1 \rangle \simeq - \frac{r_l^2}{2} \frac{1}{B_0} \pd{B}{\V{n}} \times \boldsymbol{\omega}_0 = \frac{\omega_B r_l ^2}{2 B^2} \left( \V{B} \times \boldsymbol{\nabla}_\perp B\right),
+\end{equation}
+where the last expression is written in coordinate-independent form. Here $r_l$ denotes the gyration radius (Larmor radius). It is evident from this expression that if the gradient is slowly varying in space, i.e. $r_l \vert \boldsymbol{\nabla}_\perp B / B \vert \ll 1$, this time average will be much smaller than the orbital velocity $r_l \omega_B$. Hence, in this case the particles will spiral rapidly while its centre of gyration slowly moves perpendicular to both $\V{B}$ and $\boldsymbol{\nabla}_\perp B$. In the case of a dipole field, this essentially has the direction of $\hat{\theta}$, i.e. the polar direction measured with respect to the symmetry axis of the field.
+
+One can also derive a similar expression for a drift of the centre of gyration caused by the curvature of the magnetic field. This drift velocity is approximately given by
+\begin{equation}\label{eq:v_curv}
+	\V{v}_c \simeq \frac{v_{\parallel}^2}{\omega_B R} \frac{\V{R} \times \V{B}_0}{R B_0},
+\end{equation}
+where $\V{R}$ is the radius vector pointing from the effective centre of curvature to the particle. Hence, as for the drift velocity caused by the gradient of $B$ we expect this to cause the particles to drift in the polar direction.
+
+In short, the expected behaviour is helical motion around the field lines with a slow drift around the symmetry axis of the field. As the magnetic moment of the earth points "downwards", we expect the drift to be clockwise seen from above.
